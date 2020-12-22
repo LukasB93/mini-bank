@@ -14,7 +14,7 @@
     <tr th:each="appUser: ${appUsers}">
         <td th:text="${appUser.firstName}">First Name</td>
         <td th:text="${appUser.lastName}">Last Name</td>
-        <td th:text="${appUser.password}">Password</td>
+        <td th:text="${appUser.encryptedPassword}">Password</td>
     </tr>
 </table>
 </body>

@@ -19,8 +19,8 @@ public class AppUser {
     private String firstName;
     @Column(name="LAST_NAME")
     private String lastName;
-    @Column(name="PASSWORD")
-    private String password;
+    @Column(name="ENCRYPTED_PASSWORD")
+    private String encryptedPassword;
 
     public long getUserId() {
         return userId;
@@ -46,11 +46,11 @@ public class AppUser {
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getEncryptedPassword() {
+        return encryptedPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setEncryptedPassword(String encryptedPassword) {
+        this.encryptedPassword = encryptedPassword;
     }
 }
