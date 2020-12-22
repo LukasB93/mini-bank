@@ -1,0 +1,3 @@
+INSERT INTO USER (FIRST_NAME, LAST_NAME, PASSWORD) VALUES ('Alice', 'Wonderland', 'root')
+INSERT INTO USER (FIRST_NAME, LAST_NAME, PASSWORD) VALUES ('Bill', 'Moneyhead', 'root')
+
