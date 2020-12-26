@@ -1,9 +1,9 @@
 package com.lukas.minibank.data.repository;
 
-import com.lukas.minibank.data.entity.AppUser;
+import com.lukas.minibank.data.entity.AppRole;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AppUserRepository extends CrudRepository<AppUser, Long> {
+public interface AppRoleRepository extends CrudRepository<AppRole, Long> {
 }

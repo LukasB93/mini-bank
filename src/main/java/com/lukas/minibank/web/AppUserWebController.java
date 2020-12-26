@@ -1,6 +1,6 @@
 package com.lukas.minibank.web;
 
-import com.lukas.minibank.business.service.UserService;
+import com.lukas.minibank.business.service.AppUserService;
 import com.lukas.minibank.data.entity.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,16 +13,16 @@ import java.util.List;
 @Controller
 @RequestMapping("/appUsers")
 public class AppUserWebController {
-    private final UserService userService;
+    private final AppUserService appUserService;
 
     @Autowired
-    public AppUserWebController(UserService userService) {
-        this.userService = userService;
+    public AppUserWebController(AppUserService appUserService) {
+        this.appUserService = appUserService;
     }
 
     @GetMapping
     public String getUsers(Model model) {
-        List<AppUser> appUsers = this.userService.getUsers();
+        List<AppUser> appUsers = this.appUserService.getUsers();
         model.addAttribute("appUsers", appUsers);
         return "appUsers";
     }

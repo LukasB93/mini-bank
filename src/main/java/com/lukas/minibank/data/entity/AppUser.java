@@ -15,10 +15,8 @@ public class AppUser {
     @Column(name="USER_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userId;
-    @Column(name="FIRST_NAME")
-    private String firstName;
-    @Column(name="LAST_NAME")
-    private String lastName;
+    @Column(name="USER_NAME")
+    private String userName;
     @Column(name="ENCRYPTED_PASSWORD")
     private String encryptedPassword;
 
@@ -30,20 +28,12 @@ public class AppUser {
         this.userId = userId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEncryptedPassword() {
