@@ -10,10 +10,13 @@ public class BankAccount {
     @Column(name="BA_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long baId;
-    @Column(name="USER_ID")
-    private long userId;
-    @Column(name="LAST_NAME")
-    private String ACCOUNT_NUMBER;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="USER_ID", nullable = false)
+    private AppUser appUser;
+
+    @Column(name="accountNumber")
+    private String accountNumber;
     @Column(name="BALANCE")
     private long balance;
     @Column(name="CURRENCY")
@@ -27,20 +30,20 @@ public class BankAccount {
         this.baId = baId;
     }
 
-    public long getUserId() {
-        return userId;
+    public AppUser getAppUser() {
+        return appUser;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setAppUser(AppUser appUser) {
+        this.appUser = appUser;
     }
 
-    public String getACCOUNT_NUMBER() {
-        return ACCOUNT_NUMBER;
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
-    public void setACCOUNT_NUMBER(String ACCOUNT_NUMBER) {
-        this.ACCOUNT_NUMBER = ACCOUNT_NUMBER;
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     public long getBalance() {

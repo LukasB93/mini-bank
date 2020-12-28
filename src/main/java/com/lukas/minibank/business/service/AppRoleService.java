@@ -31,7 +31,7 @@ public class AppRoleService {
     }
 
 
-    public List<String> getRoleNamesOfUser(Long userId) {
+    public List<String> getRoleNamesByUserId(Long userId) {
         String sql = "SELECT ur.appRole.roleName from " + UserRole.class.getName() + " AS ur "
                     + "WHERE ur.appUser.userId = :userId ";
 

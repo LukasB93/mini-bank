@@ -1,5 +1,6 @@
 package com.lukas.minibank.business.service;
 
+import com.lukas.minibank.business.bean.CurrentUser;
 import com.lukas.minibank.data.entity.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         System.out.println("Found User: " + appUser);
 
-        List<String> appRoleNamesList = appRoleService.getRoleNamesOfUser(appUser.getUserId());
+        List<String> appRoleNamesList = appRoleService.getRoleNamesByUserId(appUser.getUserId());
         List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
         System.out.println("Found AppRoles: " + appRoleNamesList);
         if (appRoleNamesList != null) {
@@ -45,7 +46,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             });
         }
 
-        UserDetails userDetails = (UserDetails) new User(appUser.getUserName(), appUser.getEncryptedPassword(), grantedAuthorityList);
+        UserDetails userDetails = (UserDetails) new CurrentUser(appUser.getUserName(), appUser.getEncryptedPassword(), grantedAuthorityList, appUser.getUserId());
 
         return userDetails;
     }

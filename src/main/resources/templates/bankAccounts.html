@@ -2,19 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User List | MiniBank</title>
+    <title>Bank Accounts | MiniBank</title>
 </head>
 <body>
 <!-- Include _menu.html -->
 <th:block th:include="/_menu"></th:block>
 <table border="1" class="table table-striped table-bordered">
     <tr>
-        <td>User Name</td>
-        <td>Password</td>
+        <td>Account Number</td>
+        <td>Balance</td>
     </tr>
-    <tr th:each="appUser: ${appUsers}">
-        <td th:text="${appUser.userName}">First Name</td>
-        <td th:text="${appUser.encryptedPassword}">Password</td>
+    <tr th:each="bankAccount: ${bankAccounts}">
+        <td th:text="${bankAccount.accountNumber}">Account Number</td>
+        <td th:text="${bankAccount.balance}">Balance</td>
     </tr>
 </table>
 </body>

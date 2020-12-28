@@ -5,6 +5,10 @@
 
     | &nbsp;
 
+    <a th:href="@{/bankAccounts}">My Bank Accounts</a>
+
+    | &nbsp;
+
     <a th:href="@{/userInfo}">User Info</a>
 
     | &nbsp;
@@ -13,6 +17,11 @@
 
     | &nbsp;
 
-    <a th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Logout</a>
+    <a th:if="${#request.userPrincipal == null}" th:href="@{/login}">Login</a>
+
+    <span th:if="${#request.userPrincipal != null}">
+        Hello, <b><span th:utext="${#request.userPrincipal.getName()}"></span></b> (<a th:href="@{/logout}">Logout</a>)
+    </span>
+
 
 </div>
