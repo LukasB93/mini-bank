@@ -12,11 +12,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/appUsers")
-public class AppUserWebController {
+public class AdminWebController {
     private final AppUserService appUserService;
 
     @Autowired
-    public AppUserWebController(AppUserService appUserService) {
+    public AdminWebController(AppUserService appUserService) {
         this.appUserService = appUserService;
     }
 
