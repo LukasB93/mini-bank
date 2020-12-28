@@ -1,6 +1,5 @@
 package com.lukas.minibank.business.service;
 
-import com.lukas.minibank.data.entity.AppRole;
 import com.lukas.minibank.data.entity.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,12 +16,12 @@ import java.util.List;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     private AppUserService appUserService;
-    private UserRoleService userRoleService;
+    private AppRoleService appRoleService;
 
     @Autowired
-    public UserDetailsServiceImpl(AppUserService appUserService, UserRoleService userRoleService) {
+    public UserDetailsServiceImpl(AppUserService appUserService, AppRoleService appRoleService) {
         this.appUserService = appUserService;
-        this.userRoleService = userRoleService;
+        this.appRoleService = appRoleService;
     }
 
     @Override
@@ -36,12 +35,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         System.out.println("Found User: " + appUser);
 
-        List<AppRole> appRoleList = userRoleService.getRolesOfUser(appUser);
+        List<String> appRoleNamesList = appRoleService.getRoleNamesOfUser(appUser.getUserId());
         List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
-        if (appRoleList != null) {
-            appRoleList.forEach(appRole -> {
-                System.out.println("RoleName:" + appRole.getRoleName());
-                GrantedAuthority authority = new SimpleGrantedAuthority(appRole.getRoleName());
+        System.out.println("Found AppRoles: " + appRoleNamesList);
+        if (appRoleNamesList != null) {
+            appRoleNamesList.forEach(appRoleName -> {
+                GrantedAuthority authority = new SimpleGrantedAuthority(appRoleName);
                 grantedAuthorityList.add(authority);
             });
         }
