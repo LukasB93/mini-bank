@@ -8,19 +8,27 @@ public class BankAccount {
 
     @Id
     @Column(name="BA_ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long baId;
-
+    @Column(name="NAME")
+    private String name;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="USER_ID", nullable = false)
     private AppUser appUser;
-
     @Column(name="accountNumber")
     private String accountNumber;
     @Column(name="BALANCE")
     private long balance;
     @Column(name="CURRENCY")
     private String currency;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public long getBaId() {
         return baId;

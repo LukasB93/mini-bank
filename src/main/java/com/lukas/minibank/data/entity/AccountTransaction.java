@@ -1,22 +1,49 @@
 package com.lukas.minibank.data.entity;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
+
 
 @Entity
 @Table(name = "ACCOUNT_TRANSACTION")
 public class AccountTransaction {
     @Id
     @Column(name="AT_ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long atId;
-    @Column(name="FROM_ACCOUNT")
-    private long fromAccount;
-    @Column(name="TO_ACCOUNT")
-    private long ACCOUNT_NUMBER;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="FROM_BA", nullable = false)
+    private BankAccount fromAccount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="TO_BA", nullable = false)
+    private BankAccount toAccount;
+
+    @Column(name = "REASON")
+    private String reason;
     @Column(name="SOURCE_CURRENCY")
     private String sourceCurrency;
     @Column(name="AMOUNT")
     private long amount;
+    @Column(name="TIME")
+    private ZonedDateTime time;
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public ZonedDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(ZonedDateTime time) {
+        this.time = time;
+    }
 
     public long getAtId() {
         return atId;
@@ -26,20 +53,20 @@ public class AccountTransaction {
         this.atId = atId;
     }
 
-    public long getFromAccount() {
+    public BankAccount getFromAccount() {
         return fromAccount;
     }
 
-    public void setFromAccount(long fromAccount) {
+    public void setFromAccount(BankAccount fromAccount) {
         this.fromAccount = fromAccount;
     }
 
-    public long getACCOUNT_NUMBER() {
-        return ACCOUNT_NUMBER;
+    public BankAccount getToAccount() {
+        return toAccount;
     }
 
-    public void setACCOUNT_NUMBER(long ACCOUNT_NUMBER) {
-        this.ACCOUNT_NUMBER = ACCOUNT_NUMBER;
+    public void setToAccount(BankAccount toAccount) {
+        this.toAccount = toAccount;
     }
 
     public String getSourceCurrency() {

@@ -1,5 +1,6 @@
 package com.lukas.minibank.business.service;
 
+import com.lukas.minibank.data.entity.AccountTransaction;
 import com.lukas.minibank.data.entity.BankAccount;
 import com.lukas.minibank.data.entity.UserRole;
 import com.lukas.minibank.data.repository.BankAccountRepository;
@@ -10,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BankService {
@@ -29,12 +31,38 @@ public class BankService {
         return bankAccountList;
     }
 
+    public Optional<BankAccount> getBankAccountById(long bankAccountId){
+        return this.bankAccountRepository.findById(bankAccountId);
+    }
+
     public List<BankAccount> getBankAccountsByUserId(Long userId) {
-        String sql = "SELECT ba from " + BankAccount.class.getName() + " AS ba "
+        String sql = "SELECT ba FROM " + BankAccount.class.getName() + " AS ba "
                 + "WHERE ba.appUser.userId = :userId ";
 
         Query query = this.entityManager.createQuery(sql, BankAccount.class);
         query.setParameter("userId", userId);
         return query.getResultList();
+    }
+
+    public List<AccountTransaction> getAccountTransactionsByBankAccountId(Long bankAccountId) {
+        String sql = "SELECT at FROM " + AccountTransaction.class.getName() + " AS at "
+                + "WHERE at.toAccount.baId = :bankAccountId "
+                + "OR at.fromAccount.baId = :bankAccountId "
+                + "ORDER BY time DESC ";
+
+        Query query = this.entityManager.createQuery(sql, AccountTransaction.class);
+        query.setParameter("bankAccountId", bankAccountId);
+        return query.getResultList();
+    }
+
+    public Optional<BankAccount> getBankAccountsById(Long baId) {
+        Optional<BankAccount> bankAccount = this.bankAccountRepository.findById(baId);
+
+        return bankAccount;
+    }
+
+    public void updateBalance(BankAccount bankAccount, long amount) {
+        bankAccount.setBalance( bankAccount.getBalance() + amount);
+        this.bankAccountRepository.save(bankAccount);
     }
 }

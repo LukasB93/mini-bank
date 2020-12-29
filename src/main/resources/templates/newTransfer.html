@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:utext="${title}"></title>
+</head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+<a th:href="@{/bankAccounts}">&lt;- Back to Bank Accounts</a>
+<h2>New Money Transfer</h2>
+<div th:if="${#request.getParameter('error') == 'true'}">
+     style="color:red;margin:10px 0px;">
+    Transaction failed<br />
+    Reason :
+    <span th:utext="${errorMessage}">
+        Error Message
+    </span>
+
+</div>
+<form th:action="@{/newTransfer}" th:object="${accountTransactionForm}" method="POST">
+    From Account:
+    <div class="form-group blu-margin">
+        <select th:field="*{fromAccountId}">
+            <option value="0">select account</option>
+            <option th:each="bankAccount : ${userBankAccounts}" th:value="${bankAccount.baId}" th:text="${bankAccount.name} + ' - ' + ${bankAccount.accountNumber}"></option>
+        </select>
+    </div>
+
+    <br/>
+    To Account:
+    <input type="text" th:field="*{toAccountId}" />
+    <br/>
+    Reason:
+    <input type="text" th:field="*{reason}" />
+    <br/>
+    Source Currency:
+    <input type="text" th:field="*{sourceCurrency}" />
+    <br/>
+    Amount:
+    <input type="text" th:field="*{amount}" />
+    <br/>
+    <button>Transfer Money</button>
+</form>
+</body>
+</html>
