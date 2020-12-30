@@ -29,7 +29,12 @@
 
     <br/>
     To Account:
-    <input type="text" th:field="*{toAccountId}" />
+    <div class="form-group blu-margin">
+        <select th:field="*{toAccountId}">
+            <option value="0">select account</option>
+            <option th:each="bankAccount : ${allBankAccounts}" th:value="${bankAccount.baId}" th:text="${bankAccount.appUser.userName} + ' - ' + ${bankAccount.accountNumber}"></option>
+        </select>
+    </div>
     <br/>
     Reason:
     <input type="text" th:field="*{reason}" />

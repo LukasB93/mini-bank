@@ -17,6 +17,26 @@
 
 <a th:href="@{/appUsers}">View all Users</a>
 
+<h3>Current Currency Rates</h3>
+<div th:if="${#request.getParameter('error') == 'true'}"
+     style="color:red;margin:10px 0px;">
+    Update Failed! Please make sure you are connected to the internet.<br />
+</div>
+
+<a th:href="@{/admin/updateCurrencies}">Update Currencies</a>
+<table border="1" class="table table-striped table-bordered">
+    <tr>
+        <td>Currency Code</td>
+        <td>Rate to EUR</td>
+        <td>Last Updated</td>
+    </tr>
+    <tr th:each="currency: ${currencies}">
+        <td th:text="${currency.code}">Currency Code</td>
+        <td th:text="${currency.rate}">Rate</td>
+        <td th:text="${currency.lastUpdated}">Last Updated</td>
+    </tr>
+</table>
+
 </body>
 
 </html>

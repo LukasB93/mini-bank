@@ -1,13 +1,12 @@
 package com.lukas.minibank.web;
 
-import com.lukas.minibank.business.bean.CurrentUser;
+import com.lukas.minibank.business.domain.CurrentUser;
 import com.lukas.minibank.business.service.BankService;
 import com.lukas.minibank.data.entity.AccountTransaction;
 import com.lukas.minibank.data.entity.BankAccount;
 import com.lukas.minibank.data.repository.AccountTransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,9 +64,11 @@ public class BankWebController {
         CurrentUser loggedInUser = (CurrentUser) ((Authentication) principal).getPrincipal();
         Long userId = loggedInUser.getUserId();
         List<BankAccount> userBankAccounts = this.bankService.getBankAccountsByUserId(userId);
+        List<BankAccount> allBankAccounts = this.bankService.getBankAccounts();
 
         model.addAttribute("accountTransactionForm", accountTransactionForm);
         model.addAttribute("userBankAccounts", userBankAccounts);
+        model.addAttribute("allBankAccounts", allBankAccounts);
         return "newTransfer";
     }
 

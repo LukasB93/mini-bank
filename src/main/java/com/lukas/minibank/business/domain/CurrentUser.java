@@ -1,6 +1,5 @@
-package com.lukas.minibank.business.bean;
+package com.lukas.minibank.business.domain;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
