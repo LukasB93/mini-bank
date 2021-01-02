@@ -2,13 +2,13 @@ package com.lukas.minibank.business.service;
 
 import com.lukas.minibank.data.entity.AccountTransaction;
 import com.lukas.minibank.data.entity.BankAccount;
-import com.lukas.minibank.data.entity.UserRole;
 import com.lukas.minibank.data.repository.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -61,8 +61,8 @@ public class BankService {
         return bankAccount;
     }
 
-    public void updateBalance(BankAccount bankAccount, long amount) {
-        bankAccount.setBalance( bankAccount.getBalance() + amount);
+    public void addToBalance(BankAccount bankAccount, BigDecimal amount) {
+        bankAccount.setBalance( bankAccount.getBalance().add(amount));
         this.bankAccountRepository.save(bankAccount);
     }
 }

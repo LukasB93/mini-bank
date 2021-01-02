@@ -1,6 +1,7 @@
 package com.lukas.minibank.data.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 
@@ -22,28 +23,21 @@ public class AccountTransaction {
 
     @Column(name = "REASON")
     private String reason;
-    @Column(name="SOURCE_CURRENCY")
-    private String sourceCurrency;
-    @Column(name="AMOUNT")
-    private long amount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="SOURCE_CURRENCY_ID", nullable = false)
+    private Currency sourceCurrency;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="ENDPOINT_CURRENCY_ID", nullable = false)
+    private Currency endpointCurrency;
+
+    @Column(name="SOURCE_AMOUNT")
+    private BigDecimal sourceAmount;
+    @Column(name="ENDPOINT_AMOUNT")
+    private BigDecimal endpointAmount;
     @Column(name="TIME")
     private ZonedDateTime time;
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
-    public ZonedDateTime getTime() {
-        return time;
-    }
-
-    public void setTime(ZonedDateTime time) {
-        this.time = time;
-    }
 
     public long getAtId() {
         return atId;
@@ -69,19 +63,51 @@ public class AccountTransaction {
         this.toAccount = toAccount;
     }
 
-    public String getSourceCurrency() {
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public Currency getSourceCurrency() {
         return sourceCurrency;
     }
 
-    public void setSourceCurrency(String sourceCurrency) {
+    public void setSourceCurrency(Currency sourceCurrency) {
         this.sourceCurrency = sourceCurrency;
     }
 
-    public long getAmount() {
-        return amount;
+    public Currency getEndpointCurrency() {
+        return endpointCurrency;
     }
 
-    public void setAmount(long amount) {
-        this.amount = amount;
+    public void setEndpointCurrency(Currency endpointCurrency) {
+        this.endpointCurrency = endpointCurrency;
+    }
+
+    public BigDecimal getSourceAmount() {
+        return sourceAmount;
+    }
+
+    public void setSourceAmount(BigDecimal sourceAmount) {
+        this.sourceAmount = sourceAmount;
+    }
+
+    public BigDecimal getEndpointAmount() {
+        return endpointAmount;
+    }
+
+    public void setEndpointAmount(BigDecimal endpointAmount) {
+        this.endpointAmount = endpointAmount;
+    }
+
+    public ZonedDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(ZonedDateTime time) {
+        this.time = time;
     }
 }

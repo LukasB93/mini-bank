@@ -1,6 +1,7 @@
 package com.lukas.minibank.business.service;
 
 import com.lukas.minibank.data.entity.Currency;
+import com.lukas.minibank.data.entity.UserRole;
 import com.lukas.minibank.data.repository.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -9,7 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,22 +23,20 @@ import java.util.Map;
 @Service
 public class CurrencyService {
     private final CurrencyRepository currencyRepository;
+    private final EntityManager entityManager;
     private final RestTemplateBuilder builder;
     private final RestTemplate restTemplate;
     private static final String BASE = "EUR";
     private static final String ACCESS_KEY = "0a0787627afc1491a244d24ed704d380";
 
     @Autowired
-    public CurrencyService(CurrencyRepository currencyRepository, RestTemplateBuilder builder) {
+    public CurrencyService(CurrencyRepository currencyRepository, EntityManager entityManager, RestTemplateBuilder builder) {
         this.currencyRepository = currencyRepository;
+        this.entityManager = entityManager;
         this.builder = builder;
         this.restTemplate = builder.build();
     }
 
-    @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder.build();
-    }
 
     public List<Currency> getAllCurrencies(){
         Iterable<Currency> currencies = this.currencyRepository.findAll();
@@ -49,6 +51,18 @@ public class CurrencyService {
             currenciesMap.put(currency.getCode(), currency);
         });
         return currenciesMap;
+    }
+    public Currency getCurrencyByCode(String code){
+        Currency currency = null;
+
+        String sql = "SELECT c from " + Currency.class.getName() + " AS c "
+                + "WHERE c.code = :code ";
+
+        Query query = this.entityManager.createQuery(sql, Currency.class);
+        query.setParameter("code", code);
+        currency = (Currency)query.getSingleResult();
+
+        return currency;
     }
 
     public boolean updateCurrencies() {
@@ -85,5 +99,24 @@ public class CurrencyService {
         }
 
         return success;
+    }
+
+    public BigDecimal convert(String sourceCurrencyCode, String endpointCurrencyCode, BigDecimal sourceAmount) {
+        BigDecimal outcomeAmount = BigDecimal.valueOf(0);
+
+        boolean success;
+        success = updateCurrencies();
+        if (success) {
+            Currency sourceCurrency = this.getCurrencyByCode(sourceCurrencyCode);
+            Currency endpointCurrency = this.getCurrencyByCode(endpointCurrencyCode);
+            BigDecimal sourceRate = sourceCurrency.getRate();
+            BigDecimal endpointRate = endpointCurrency.getRate();
+
+            BigDecimal euro = sourceAmount.divide(sourceRate, MathContext.DECIMAL32);
+            outcomeAmount = euro.multiply(endpointRate, MathContext.DECIMAL32);
+        }
+
+        System.out.println("outcomeAmount: " + outcomeAmount);
+        return outcomeAmount;
     }
 }

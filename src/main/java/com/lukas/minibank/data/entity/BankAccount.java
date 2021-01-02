@@ -1,6 +1,7 @@
 package com.lukas.minibank.data.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name="BANK_ACCOUNT")
@@ -18,9 +19,10 @@ public class BankAccount {
     @Column(name="accountNumber")
     private String accountNumber;
     @Column(name="BALANCE")
-    private long balance;
-    @Column(name="CURRENCY")
-    private String currency;
+    private BigDecimal balance;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CURRENCY_ID", nullable = false)
+    private Currency currency;
 
     public String getName() {
         return name;
@@ -54,19 +56,19 @@ public class BankAccount {
         this.accountNumber = accountNumber;
     }
 
-    public long getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(long balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 }

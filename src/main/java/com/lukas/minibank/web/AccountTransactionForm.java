@@ -4,7 +4,6 @@ public class AccountTransactionForm {
     private long fromAccountId;
     private long toAccountId;
     private String reason;
-    private String sourceCurrency;
     private long amount;
 
     public long getFromAccountId() {
@@ -29,14 +28,6 @@ public class AccountTransactionForm {
 
     public void setReason(String reason) {
         this.reason = reason;
-    }
-
-    public String getSourceCurrency() {
-        return sourceCurrency;
-    }
-
-    public void setSourceCurrency(String sourceCurrency) {
-        this.sourceCurrency = sourceCurrency;
     }
 
     public long getAmount() {

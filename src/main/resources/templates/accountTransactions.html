@@ -11,21 +11,27 @@
 <h2 th:text="${selectedBankAccount.name}"></h2>
 <h3 th:text="${selectedBankAccount.accountNumber}"></h3>
 <h3> Current Balance: <span th:text="${selectedBankAccount.balance}"></span></h3>
-<a th:href="@{/newTransfer}">Transfer Money</a>
+
 <table border="1" class="table table-striped table-bordered">
     <tr>
         <td>From Account</td>
         <td>To Account</td>
         <td>Reason Of Payment</td>
-        <td>Amount</td>
+        <td>Source Amount</td>
+        <td>Source Currency</td>
+        <td>Endpoint Amount</td>
+        <td>Endpoint Currency</td>
         <td>Time</td>
     </tr>
     <tr th:each="accountTransaction: ${accountTransactions}">
         <td th:text="${accountTransaction.fromAccount.accountNumber}">From Account</td>
         <td th:text="${accountTransaction.toAccount.accountNumber}">To Account</td>
-        <td th:text="${accountTransaction.reason}">To Account</td>
-        <td th:text="${accountTransaction.amount}">Amount</td>
-        <td th:text="${accountTransaction.time}">Amount</td>
+        <td th:text="${accountTransaction.reason}">Reason</td>
+        <td th:text="${accountTransaction.sourceAmount}">Source Amount</td>
+        <td th:text="${accountTransaction.sourceCurrency.code}">Source Currency</td>
+        <td th:text="${accountTransaction.endpointAmount}">Endpoint Amount</td>
+        <td th:text="${accountTransaction.endpointCurrency.code}">Endpoint Currency</td>
+        <td th:text="${accountTransaction.time}">Time</td>
     </tr>
 </table>
 </body>

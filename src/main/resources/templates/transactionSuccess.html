@@ -10,7 +10,7 @@
 <a th:href="@{/bankAccounts}">&lt;- Back to Bank Accounts</a>
 <h2>New Money Transfer</h2>
 <div th:if="${#request.getParameter('error') == 'true'}">
-     style="color:red;margin:10px 0px;">
+    style="color:red;margin:10px 0px;">
     Transaction failed<br />
     Reason :
     <span th:utext="${errorMessage}">
@@ -18,7 +18,6 @@
     </span>
 
 </div>
-<form th:action="@{/newTransfer}" th:object="${accountTransactionForm}" method="POST">
     From Account:
     <div class="form-group blu-margin">
         <select th:field="*{fromAccountId}">
@@ -43,6 +42,5 @@
     <input type="text" th:field="*{amount}" />
     <br/>
     <button>Transfer Money</button>
-</form>
 </body>
 </html>
