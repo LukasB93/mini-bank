@@ -111,9 +111,9 @@ public class CurrencyService {
             Currency endpointCurrency = this.getCurrencyByCode(endpointCurrencyCode);
             BigDecimal sourceRate = sourceCurrency.getRate();
             BigDecimal endpointRate = endpointCurrency.getRate();
+            BigDecimal rate = endpointRate.divide(sourceRate, MathContext.DECIMAL32);
 
-            BigDecimal euro = sourceAmount.divide(sourceRate, MathContext.DECIMAL32);
-            outcomeAmount = euro.multiply(endpointRate, MathContext.DECIMAL32);
+            outcomeAmount = sourceAmount.multiply(rate, MathContext.DECIMAL32);
         }
 
         System.out.println("outcomeAmount: " + outcomeAmount);

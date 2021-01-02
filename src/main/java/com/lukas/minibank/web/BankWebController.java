@@ -111,17 +111,18 @@ public class BankWebController {
         bankService.addToBalance(accountTransaction.getFromAccount(), sourceAmount.multiply(new BigDecimal("-1")));
         bankService.addToBalance(accountTransaction.getToAccount(), outcomeAmount);
         accountTransactionRepository.save(accountTransaction);
+        model.addAttribute("accountTransaction", accountTransaction);
         model.addAttribute("selectedBankAccount", accountTransaction.getFromAccount());
         model.addAttribute("accountTransactions", bankService.getAccountTransactionsByBankAccountId(accountTransaction.getFromAccount().getBaId()));
-        return "/accountTransactions";
+        return "/transactionSuccess";
     }
 
-    @RequestMapping(value = "/newTransfer/success", method = RequestMethod.POST)
-    public String accountTransactions(@RequestParam(value="accountTransactionForm")AccountTransactionForm accountTransactionForm, Model model) {
+    @RequestMapping(value = "/transactionSuccess", method = RequestMethod.GET)
+    public String accountTransactions(@RequestParam(value="accountTransaction")AccountTransaction accountTransaction, Model model) {
         model.addAttribute("title", "Transaction Successful | Mini Bank");
 
-        model.addAttribute("accountTransactionForm", accountTransactionForm);
-        return "accountTransactions";
+        model.addAttribute("accountTransaction", accountTransaction);
+        return "transactionSuccess";
     }
 
 

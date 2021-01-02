@@ -8,39 +8,31 @@
 <!-- Include _menu.html -->
 <th:block th:include="/_menu"></th:block>
 <a th:href="@{/bankAccounts}">&lt;- Back to Bank Accounts</a>
-<h2>New Money Transfer</h2>
-<div th:if="${#request.getParameter('error') == 'true'}">
-    style="color:red;margin:10px 0px;">
-    Transaction failed<br />
-    Reason :
-    <span th:utext="${errorMessage}">
-        Error Message
-    </span>
+<h2>Transfer Successful!</h2>
+<table border="1">
+    <tr>
+        <td>From Account</td>
+        <td>To Account</td>
+        <td>Reason</td>
+    </tr>
+    <tr>
+        <td th:text="${accountTransaction.fromAccount.name} + ' - ' + ${accountTransaction.fromAccount.accountNumber}">From Account</td>
+        <td th:text="${accountTransaction.toAccount.appUser.userName} + ' - ' + ${accountTransaction.toAccount.accountNumber}">To Account</td>
+        <td th:text="${accountTransaction.reason}">Reason</td>
+    </tr>
+</table>
+<br/>
+<table border="1">
+    <tr>
+        <td>Source Amount</td>
+        <td>Rate</td>
+        <td>Endpoint Amount</td>
+    </tr>
+    <tr>
+        <td th:text="${accountTransaction.sourceAmount} + ' ' + ${accountTransaction.sourceCurrency.code}">Source Amount</td>
+        <td th:text="${accountTransaction.endpointCurrency.rate} / ${accountTransaction.sourceCurrency.rate}">Rate</td>
+        <td th:text="${accountTransaction.endpointAmount} + ' ' + ${accountTransaction.endpointCurrency.code}">Endpoint Amount</td>
+    </tr>
+</table>
 
-</div>
-    From Account:
-    <div class="form-group blu-margin">
-        <select th:field="*{fromAccountId}">
-            <option value="0">select account</option>
-            <option th:each="bankAccount : ${userBankAccounts}" th:value="${bankAccount.baId}" th:text="${bankAccount.name} + ' - ' + ${bankAccount.accountNumber}"></option>
-        </select>
-    </div>
-
-    <br/>
-    To Account:
-    <div class="form-group blu-margin">
-        <select th:field="*{toAccountId}">
-            <option value="0">select account</option>
-            <option th:each="bankAccount : ${allBankAccounts}" th:value="${bankAccount.baId}" th:text="${bankAccount.appUser.userName} + ' - ' + ${bankAccount.accountNumber}"></option>
-        </select>
-    </div>
-    <br/>
-    Reason:
-    <input type="text" th:field="*{reason}" />
-    <br/>
-    Amount:
-    <input type="text" th:field="*{amount}" />
-    <br/>
-    <button>Transfer Money</button>
-</body>
 </html>
