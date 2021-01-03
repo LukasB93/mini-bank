@@ -57,6 +57,7 @@ public class MainWebController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage(Model model) {
+        model.addAttribute("title", "Login | Mini Bank");
         return "loginPage";
     }
 

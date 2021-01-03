@@ -31,13 +31,4 @@ public class AppUserService {
         AppUser appUser = appUsersMap.get(userName);
         return appUser;
     }
-
-    public Optional<AppUser> getUserById(Long userId) {
-        return this.appUserRepository.findById(userId);
-    }
-
-    public AppUser findUserAccount(String userName) {
-
-        return null;
-    }
 }

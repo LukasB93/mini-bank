@@ -35,7 +35,7 @@ public class BankService {
         return this.bankAccountRepository.findById(bankAccountId);
     }
 
-    public List<BankAccount> getBankAccountsByUserId(Long userId) {
+    public List<BankAccount> getBankAccountsByUserId(long userId) {
         String sql = "SELECT ba FROM " + BankAccount.class.getName() + " AS ba "
                 + "WHERE ba.appUser.userId = :userId ";
 
@@ -44,7 +44,7 @@ public class BankService {
         return query.getResultList();
     }
 
-    public List<AccountTransaction> getAccountTransactionsByBankAccountId(Long bankAccountId) {
+    public List<AccountTransaction> getAccountTransactionsByBankAccountId(long bankAccountId) {
         String sql = "SELECT at FROM " + AccountTransaction.class.getName() + " AS at "
                 + "WHERE at.toAccount.baId = :bankAccountId "
                 + "OR at.fromAccount.baId = :bankAccountId "
@@ -55,7 +55,7 @@ public class BankService {
         return query.getResultList();
     }
 
-    public Optional<BankAccount> getBankAccountsById(Long baId) {
+    public Optional<BankAccount> getBankAccountsById(long baId) {
         Optional<BankAccount> bankAccount = this.bankAccountRepository.findById(baId);
 
         return bankAccount;

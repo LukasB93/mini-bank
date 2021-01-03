@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
-
 @Entity
 @Table(name = "ACCOUNT_TRANSACTION")
 public class AccountTransaction {

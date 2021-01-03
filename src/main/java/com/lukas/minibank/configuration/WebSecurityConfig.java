@@ -29,10 +29,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        // Setting Service to find User in the database.
-        // and Setting PassswordEncoder
+        // setting Service to find User in the database.
+        // and setting PassswordEncoder
         auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
-
     }
 
     @Override
@@ -46,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //Page /userinfo requires ROLE_USER or ROLE_ADMIN
         //If not logged in will redirect to /login
-        http.authorizeRequests().antMatchers("/userInfo", "/bankAccounts").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/userInfo", "/bankAccounts", "/accountTransactions", "/newTransfer", "transactionSuccess").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
 
         //Page /admin requires ROLE_ADMIN
         http.authorizeRequests().antMatchers("/admin", "/appUsers").access("hasRole('ROLE_ADMIN')");

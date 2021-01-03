@@ -64,6 +64,7 @@ public class BankWebController {
 
     @RequestMapping(value = { "/newTransfer" }, method = RequestMethod.GET)
     public String newTransaction(Model model, Principal principal) {
+        model.addAttribute("title", "New Money Transfer | Mini Bank");
         AccountTransactionForm accountTransactionForm = new AccountTransactionForm();
         CurrentUser loggedInUser = (CurrentUser) ((Authentication) principal).getPrincipal();
         Long userId = loggedInUser.getUserId();
@@ -97,7 +98,7 @@ public class BankWebController {
             return "/newTransfer?error=true";
         }
 
-        BigDecimal sourceAmount = new BigDecimal(accountTransactionForm.getAmount());
+        BigDecimal sourceAmount = accountTransactionForm.getAmount();
 
         accountTransaction.setReason( accountTransactionForm.getReason() );
         accountTransaction.setSourceCurrency( fromAccount.get().getCurrency() );

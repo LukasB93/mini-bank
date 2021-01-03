@@ -1,10 +1,12 @@
 package com.lukas.minibank.web;
 
+import java.math.BigDecimal;
+
 public class AccountTransactionForm {
     private long fromAccountId;
     private long toAccountId;
     private String reason;
-    private long amount;
+    private BigDecimal amount;
 
     public long getFromAccountId() {
         return fromAccountId;
@@ -30,11 +32,11 @@ public class AccountTransactionForm {
         this.reason = reason;
     }
 
-    public long getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 }

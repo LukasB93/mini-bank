@@ -1,11 +1,9 @@
 package com.lukas.minibank.business.service;
 
 import com.lukas.minibank.data.entity.Currency;
-import com.lukas.minibank.data.entity.UserRole;
 import com.lukas.minibank.data.repository.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -24,7 +22,6 @@ import java.util.Map;
 public class CurrencyService {
     private final CurrencyRepository currencyRepository;
     private final EntityManager entityManager;
-    private final RestTemplateBuilder builder;
     private final RestTemplate restTemplate;
     private static final String BASE = "EUR";
     private static final String ACCESS_KEY = "0a0787627afc1491a244d24ed704d380";
@@ -33,7 +30,6 @@ public class CurrencyService {
     public CurrencyService(CurrencyRepository currencyRepository, EntityManager entityManager, RestTemplateBuilder builder) {
         this.currencyRepository = currencyRepository;
         this.entityManager = entityManager;
-        this.builder = builder;
         this.restTemplate = builder.build();
     }
 
