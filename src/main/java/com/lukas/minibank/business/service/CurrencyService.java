@@ -77,17 +77,17 @@ public class CurrencyService {
         }
 
         if (success) {
-            Map<String, Object> rates = (Map<String, Object>)fixerMap.get("rates");
+            Map<String, Object> fixerRates = (Map<String, Object>)fixerMap.get("rates");
 
-            for (String key : rates.keySet()) {
+            for (String currencyCode : fixerRates.keySet()) {
                 Currency currency;
-                if (currenciesMap.containsKey(key)) {
-                    currency = currenciesMap.get(key);
+                if (currenciesMap.containsKey(currencyCode)) {
+                    currency = currenciesMap.get(currencyCode);
                 } else {
                     currency = new Currency();
-                   currency.setCode(key);
+                    currency.setCode(currencyCode);
                 }
-                String rate = rates.get(key).toString();
+                String rate = fixerRates.get(currencyCode).toString();
                 currency.setRate(new BigDecimal(rate));
                 currency.setLastUpdated(ZonedDateTime.now());
                 this.currencyRepository.save(currency);
