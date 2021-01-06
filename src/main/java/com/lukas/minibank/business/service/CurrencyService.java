@@ -76,6 +76,24 @@ public class CurrencyService {
             e.printStackTrace();
         }
 
+        /*
+            ** JSON Response: **
+            *
+            * {
+            *  "success":true,
+            *  "timestamp":1609955287,
+            *  "base":"EUR",
+            *  "date":"2021-01-06",
+            *  "rates":{
+            *    "AED":4.517081,
+            *    (...)
+            *    "ZWL":395.998433
+            *  }
+            * }
+            *
+            *
+         */
+
         if (success) {
             Map<String, Object> fixerRates = (Map<String, Object>)fixerMap.get("rates");
 
