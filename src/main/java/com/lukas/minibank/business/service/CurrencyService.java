@@ -98,19 +98,14 @@ public class CurrencyService {
     }
 
     public BigDecimal convert(String sourceCurrencyCode, String endpointCurrencyCode, BigDecimal sourceAmount) {
-        BigDecimal outcomeAmount = BigDecimal.valueOf(0);
+        BigDecimal outcomeAmount;
 
-        boolean success;
-        success = updateCurrencies();
-        if (success) {
-            Currency sourceCurrency = this.getCurrencyByCode(sourceCurrencyCode);
-            Currency endpointCurrency = this.getCurrencyByCode(endpointCurrencyCode);
-            BigDecimal sourceRate = sourceCurrency.getRate();
-            BigDecimal endpointRate = endpointCurrency.getRate();
-            BigDecimal rate = endpointRate.divide(sourceRate, MathContext.DECIMAL32);
-
-            outcomeAmount = sourceAmount.multiply(rate, MathContext.DECIMAL32);
-        }
+        Currency sourceCurrency = this.getCurrencyByCode(sourceCurrencyCode);
+        Currency endpointCurrency = this.getCurrencyByCode(endpointCurrencyCode);
+        BigDecimal sourceRate = sourceCurrency.getRate();
+        BigDecimal endpointRate = endpointCurrency.getRate();
+        BigDecimal rate = endpointRate.divide(sourceRate, MathContext.DECIMAL32);
+        outcomeAmount = sourceAmount.multiply(rate, MathContext.DECIMAL32);
 
         System.out.println("outcomeAmount: " + outcomeAmount);
         return outcomeAmount;

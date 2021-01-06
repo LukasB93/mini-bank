@@ -1,6 +1,6 @@
 package com.lukas.minibank.web;
 
-import com.lukas.minibank.business.domain.CurrentUser;
+import com.lukas.minibank.business.service.CurrentUser;
 import com.lukas.minibank.business.service.BankService;
 import com.lukas.minibank.business.service.CurrencyService;
 import com.lukas.minibank.data.entity.AccountTransaction;
@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.security.Principal;
@@ -104,18 +101,25 @@ public class BankWebController {
         accountTransaction.setSourceCurrency( fromAccount.get().getCurrency() );
         accountTransaction.setEndpointCurrency( toAccount.get().getCurrency() );
         accountTransaction.setTime(ZonedDateTime.now());
-
         accountTransaction.setSourceAmount( sourceAmount );
-        BigDecimal outcomeAmount = currencyService.convert(fromAccount.get().getCurrency().getCode(), toAccount.get().getCurrency().getCode(), sourceAmount);
-        accountTransaction.setEndpointAmount( outcomeAmount );
 
-        bankService.addToBalance(accountTransaction.getFromAccount(), sourceAmount.multiply(new BigDecimal("-1")));
-        bankService.addToBalance(accountTransaction.getToAccount(), outcomeAmount);
-        accountTransactionRepository.save(accountTransaction);
-        model.addAttribute("accountTransaction", accountTransaction);
-        model.addAttribute("selectedBankAccount", accountTransaction.getFromAccount());
-        model.addAttribute("accountTransactions", bankService.getAccountTransactionsByBankAccountId(accountTransaction.getFromAccount().getBaId()));
-        return "/transactionSuccess";
+        if (currencyService.updateCurrencies()) {
+            //Currency Rates Update successful
+            BigDecimal outcomeAmount = currencyService.convert(fromAccount.get().getCurrency().getCode(), toAccount.get().getCurrency().getCode(), sourceAmount);
+            accountTransaction.setEndpointAmount( outcomeAmount );
+
+            bankService.addToBalance(accountTransaction.getFromAccount(), sourceAmount.multiply(new BigDecimal("-1")));
+            bankService.addToBalance(accountTransaction.getToAccount(), outcomeAmount);
+            accountTransactionRepository.save(accountTransaction);
+            model.addAttribute("accountTransaction", accountTransaction);
+            model.addAttribute("selectedBankAccount", accountTransaction.getFromAccount());
+            model.addAttribute("accountTransactions", bankService.getAccountTransactionsByBankAccountId(accountTransaction.getFromAccount().getBaId()));
+
+            return "/transactionSuccess";
+        } else {
+            return "redirect:/newTransfer?error=true";
+        }
+
     }
 
     @RequestMapping(value = "/transactionSuccess", method = RequestMethod.GET)

@@ -1,6 +1,5 @@
 package com.lukas.minibank.business.service;
 
-import com.lukas.minibank.business.domain.CurrentUser;
 import com.lukas.minibank.data.entity.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

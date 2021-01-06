@@ -18,8 +18,7 @@
 <a th:href="@{/appUsers}">View all Users</a>
 
 <h3>Current Currency Rates</h3>
-<div th:if="${#request.getParameter('error') == 'true'}"
-     style="color:red;margin:10px 0px;">
+<div th:if="${#request.getParameter('error') == 'true'}" style="color:red;margin:10px 0px;">
     Update Failed! Please make sure you are connected to the internet.<br />
 </div>
 

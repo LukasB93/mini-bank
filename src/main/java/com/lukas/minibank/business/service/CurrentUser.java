@@ -1,4 +1,4 @@
-package com.lukas.minibank.business.domain;
+package com.lukas.minibank.business.service;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
