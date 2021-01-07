@@ -86,13 +86,13 @@ public class BankWebController {
             accountTransaction.setFromAccount( fromAccount.get() );
         } else {
             model.addAttribute("errorMessage", "From Account could not be found.");
-            return "redirect:/newTransfer?error=true";
+            return "redirect:newTransfer?error=true";
         }
         if (toAccount.isPresent()) {
             accountTransaction.setToAccount( toAccount.get() );
         } else {
             model.addAttribute("errorMessage", "To Account could not be found.");
-            return "redirect:/newTransfer?error=true";
+            return "redirect:newTransfer?error=true";
         }
 
         BigDecimal sourceAmount = accountTransactionForm.getAmount();
@@ -115,9 +115,9 @@ public class BankWebController {
             model.addAttribute("selectedBankAccount", accountTransaction.getFromAccount());
             model.addAttribute("accountTransactions", bankService.getAccountTransactionsByBankAccountId(accountTransaction.getFromAccount().getBaId()));
 
-            return "/transactionSuccess";
+            return "transactionSuccess";
         } else {
-            return "redirect:/newTransfer?error=true";
+            return "redirect:newTransfer?error=true";
         }
 
     }
